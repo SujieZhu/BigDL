@@ -301,6 +301,7 @@ abstract class AbstractModule[A <: Activity: ClassTag, B <: Activity: ClassTag,
     case that: AbstractModule[A, B, T] =>
       (that canEqual this) &&
         (that.getClass equals this.getClass) &&
+        namePostfix == that.namePostfix &&
         output == that.output &&
         gradInput == that.gradInput
     case _ => false
@@ -308,7 +309,7 @@ abstract class AbstractModule[A <: Activity: ClassTag, B <: Activity: ClassTag,
 
   override def hashCode(): Int = {
     def getHashCode(a: Object): Int = if (a == null) 0 else a.hashCode()
-    val state = Seq(output, gradInput, this.getClass)
+    val state = Seq(output, gradInput, namePostfix, this.getClass)
     state.map(getHashCode).foldLeft(0)((a, b) => 31 * a + b)
   }
 
